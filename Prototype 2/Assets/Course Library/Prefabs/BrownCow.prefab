@@ -1236,7 +1236,7 @@ GameObject:
   - component: {fileID: 156489657015106411}
   - component: {fileID: -113538554293870267}
   - component: {fileID: 3095638675404595229}
-  - component: {fileID: 8976885940355693536}
+  - component: {fileID: 3098200456013075246}
   m_Layer: 0
   m_Name: BrownCow
   m_TagString: Untagged
@@ -1292,7 +1292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48bd0922f4790194780d5eb9a2f02aec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 0.1
 --- !u!114 &-113538554293870267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1302,7 +1302,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 455941631084227518}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 864cbe44c92f09843ba6b1cac95698a2, type: 3}
+  m_Script: {fileID: 11500000, guid: 81e62e9a8a22fac478a927ce940e28f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!65 &3095638675404595229
@@ -1318,7 +1318,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 19.928715, y: 25.455523, z: 38.748604}
   m_Center: {x: 0.11815429, y: 14.852042, z: -1.3861}
---- !u!114 &8976885940355693536
+--- !u!114 &3098200456013075246
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1327,7 +1327,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 455941631084227518}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 181c2a5ae85c4fa4d85f4e6210241f74, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c52ee72091692143869a36cdefe1fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &455941631084229790
