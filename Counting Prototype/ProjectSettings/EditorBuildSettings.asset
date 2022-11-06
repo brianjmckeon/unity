@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Cornhole.unity
+    guid: 0a10272a17be0384c8fdee908685e374
   m_configObjects: {}
