@@ -281,9 +281,9 @@ GameObject:
   - component: {fileID: 1669857897717426534}
   - component: {fileID: 1669857897708099590}
   - component: {fileID: 9210379009168699262}
-  - component: {fileID: 8464029583286335686}
   - component: {fileID: 1989522765784237664}
   - component: {fileID: 5453380779185101812}
+  - component: {fileID: 3485408567477511664}
   m_Layer: 0
   m_Name: Rooster
   m_TagString: Untagged
@@ -346,19 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48bd0922f4790194780d5eb9a2f02aec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
---- !u!114 &8464029583286335686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1669857897717508566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 864cbe44c92f09843ba6b1cac95698a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  speed: 0.1
 --- !u!65 &1989522765784237664
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -381,7 +369,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1669857897717508566}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 181c2a5ae85c4fa4d85f4e6210241f74, type: 3}
+  m_Script: {fileID: 11500000, guid: 81e62e9a8a22fac478a927ce940e28f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3485408567477511664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669857897717508566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c52ee72091692143869a36cdefe1fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1669857897717509990
