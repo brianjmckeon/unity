@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,7 +16,6 @@ public class MainManager : MonoBehaviour
     private int m_Points;
 
     private bool m_GameOver = false;
-
 
     // Start is called before the first frame update
     void Start()
@@ -69,7 +66,6 @@ public class MainManager : MonoBehaviour
         var text = "";
 
         // If a player name has been set, add it to the score text.
-        Debug.Log(GameData.Instance.Name);
         if (GameData.Instance.Name != null && GameData.Instance.Name.Length > 0)
         {
             text = $"{GameData.Instance.Name}'s ";
@@ -87,6 +83,7 @@ public class MainManager : MonoBehaviour
             GameData.Instance.SetHighScorer(m_Points);
         }
 
+        // Retrieve the high scorer again in case the current player is the high scorer
         (highScorerName, highScore) = GameData.Instance.GetHighScorer();
         text = $"High Score: {highScore} Name: {highScorerName}";
         HighScoreText.text = text;
@@ -102,6 +99,6 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
-        GameData.Instance.SaveGameData(m_Points);
+        GameData.Instance.SaveGameData();
     }
 }

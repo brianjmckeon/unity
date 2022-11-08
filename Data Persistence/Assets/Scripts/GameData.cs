@@ -1,17 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-[System.Serializable]
 public class GameData : MonoBehaviour
 {
-    public static GameData Instance = null;
+    public static GameData Instance;
     public string Name;
 
-    private string highScoreName;
-    private int highScore;
-    private const string filePath = "/gamedata.json";
+    private HighScoreData highScoreData;
+    private const string filePath = "/highscore.json";
+
+    [System.Serializable]
+    class HighScoreData
+    {
+        public string name;
+        public int score;
+    }
 
     private void Awake()
     {
@@ -24,20 +27,17 @@ public class GameData : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         LoadGameData();
-
-        // We only provide a default name for testing the main scene in isolation
-        Name = "Fred";
     }
 
     public (string name, int score) GetHighScorer()
     {
-        return (highScoreName, highScore);
+        return (highScoreData.name, highScoreData.score);
     }
 
     public void SetHighScorer(int newHighScore)
     {
-        highScoreName = Name;
-        highScore = newHighScore;
+        highScoreData.name = Name;
+        highScoreData.score = newHighScore;
     }
 
     private void LoadGameData()
@@ -46,23 +46,19 @@ public class GameData : MonoBehaviour
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
-            GameData data = JsonUtility.FromJson<GameData>(json);
-            highScoreName = data.highScoreName;
-            highScore = data.highScore;
+            highScoreData = JsonUtility.FromJson<HighScoreData>(json);
         }
         else
         {
-            highScoreName = "Fred";
-            highScore = 0;
+            highScoreData = new HighScoreData();
+            highScoreData.name = "Fred";
+            highScoreData.score = 0;
         }
     }
 
-    public void SaveGameData(int newHighScore)
+    public void SaveGameData()
     {
-        GameData data = new GameData();
-        data.highScoreName = highScoreName;
-        data.highScore = newHighScore;
-        string json = JsonUtility.ToJson(data);
+        string json = JsonUtility.ToJson(highScoreData);
         File.WriteAllText(Application.persistentDataPath + filePath, json);
     }
 }
