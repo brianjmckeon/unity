@@ -11,21 +11,23 @@ public class MainManager : MonoBehaviour
     public Rigidbody Ball;
 
     public Text ScoreText;
+    public Text HighScoreText;
     public GameObject GameOverText;
-    
+
     private bool m_Started = false;
     private int m_Points;
-    
+
     private bool m_GameOver = false;
 
-    
+
     // Start is called before the first frame update
     void Start()
     {
+        UpdateScore();
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
-        
-        int[] pointCountArray = new [] {1,1,2,2,5,5};
+
+        int[] pointCountArray = new[] { 1, 1, 2, 2, 5, 5 };
         for (int i = 0; i < LineCount; ++i)
         {
             for (int x = 0; x < perLine; ++x)
@@ -62,15 +64,44 @@ public class MainManager : MonoBehaviour
         }
     }
 
+    void UpdateScore()
+    {
+        var text = "";
+
+        // If a player name has been set, add it to the score text.
+        Debug.Log(GameData.Instance.Name);
+        if (GameData.Instance.Name != null && GameData.Instance.Name.Length > 0)
+        {
+            text = $"{GameData.Instance.Name}'s ";
+        }
+
+        text += $"Score: {m_Points}";
+        ScoreText.text = text;
+
+        // Update high score
+        var (highScorerName, highScore) = GameData.Instance.GetHighScorer();
+
+        // See if we have a new high scorer!
+        if (m_Points > highScore)
+        {
+            GameData.Instance.SetHighScorer(m_Points);
+        }
+
+        (highScorerName, highScore) = GameData.Instance.GetHighScorer();
+        text = $"High Score: {highScore} Name: {highScorerName}";
+        HighScoreText.text = text;
+    }
+
     void AddPoint(int point)
     {
         m_Points += point;
-        ScoreText.text = $"Score : {m_Points}";
+        UpdateScore();
     }
 
     public void GameOver()
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+        GameData.Instance.SaveGameData(m_Points);
     }
 }
