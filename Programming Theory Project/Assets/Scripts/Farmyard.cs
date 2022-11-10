@@ -18,7 +18,7 @@ public class Farmyard : MonoBehaviour
     void Start()
     {
         ground = GameObject.Find("Ground");
-        //buildFarmyard();
+        buildFarmyard();
         buildFence();
     }
 
@@ -28,62 +28,85 @@ public class Farmyard : MonoBehaviour
 
     }
 
-    void buildFence()
+    // Builds the north and south sides of the fence.
+    // Adds new objects to parent.
+    void buildNorthAndSouthFences(GameObject parent, MeshRenderer groundMesh)
     {
-        var groundMesh = ground.GetComponent<MeshRenderer>();
-
         // We'll need to rotate the fence prefab to orient it correctly for each side of the yard.
-        // So we use a reference object for this purpose.
+        // So we use a reference object for this purpose and destroy it later.
         Quaternion quat = Quaternion.AngleAxis(90, Vector3.up);
-        GameObject fence = Instantiate(fencePrefab, Vector3.zero, quat);
-        var fenceMesh = fence.GetComponent<MeshRenderer>();
+        GameObject fenceRefObject = Instantiate(fencePrefab, Vector3.zero, quat);
+        var fenceMesh = fenceRefObject.GetComponent<MeshRenderer>();
 
-        //float startZ = groundMesh.bounds.min.z + fenceMesh.bounds.extents.z;
-
-        // Build north and south walls at same time since the fence rotation is the same
         float northStartX = groundMesh.bounds.min.x;
         float southStartX = groundMesh.bounds.max.x;
         float startZ = groundMesh.bounds.min.z - fenceMesh.bounds.extents.z / 6;
 
         int count = (int)(groundMesh.bounds.extents.z / fenceMesh.bounds.extents.z);
 
-        //Debug.Log(groundMesh + " " + fenceMesh + " " + fencePrefab);
-
         for (int i = 0; i <= count; i++)
         {
-            Instantiate(
+            var northSection = Instantiate(
                 fencePrefab,
                 new Vector3(northStartX, 0, startZ + i * fenceMesh.bounds.extents.z * 2),
                 quat);
 
-            Instantiate(
+            var southSection = Instantiate(
                 fencePrefab,
                 new Vector3(southStartX, 0, startZ + i * fenceMesh.bounds.extents.z * 2),
                 quat);
+
+            northSection.transform.parent = parent.transform;
+            southSection.transform.parent = parent.transform;
         }
 
-        // Rotate the fence again and build the east and west walls
-        quat = Quaternion.AngleAxis(90, Vector3.up);
+        Destroy(fenceRefObject);
+    }
+
+    // Builds the east and west sides of the fence.
+    // Adds new objects to parent.
+    void buildEastAndWestFences(GameObject parent, MeshRenderer groundMesh)
+    {
+        // No rotation necessary here.
+        Quaternion quat = fencePrefab.transform.rotation;
+        GameObject fenceRefObject = Instantiate(fencePrefab, Vector3.zero, quat);
+        var fenceMesh = fenceRefObject.GetComponent<MeshRenderer>();
 
         float northStartZ = groundMesh.bounds.min.z;
         float southStartZ = groundMesh.bounds.max.z;
-        float startX = groundMesh.bounds.min.x - fenceMesh.bounds.extents.x / 6;
+        float startX = groundMesh.bounds.min.x + fenceMesh.bounds.extents.x * 1.7f;
+
+        int count = (int)(groundMesh.bounds.extents.x / fenceMesh.bounds.extents.x);
 
         for (int i = 0; i <= count; i++)
         {
-            Instantiate(
+            var eastSection = Instantiate(
+                fencePrefab,
+                new Vector3(startX + i * fenceMesh.bounds.extents.x * 2, 0, southStartZ),
+                quat);
+
+            var westSection = Instantiate(
                 fencePrefab,
                 new Vector3(startX + i * fenceMesh.bounds.extents.x * 2, 0, northStartZ),
                 quat);
 
-            Instantiate(
-                fencePrefab,
-                new Vector3(startX + i * fenceMesh.bounds.extents.x * 2, 0, southStartZ),
-                quat);
+            eastSection.transform.parent = parent.transform;
+            westSection.transform.parent = parent.transform;
         }
 
-        // Destroy the fence instant we were using for reference
-        Destroy(fence);
+        Destroy(fenceRefObject);
+    }
+
+    // Creates new fence sections from a prefab to enclose  the farmyard.
+    // Adds all sections to a new object Farmyard/Borders
+    void buildFence()
+    {
+        var borders = new GameObject("Borders");
+        borders.transform.parent = gameObject.transform;
+
+        var groundMesh = ground.GetComponent<MeshRenderer>();
+        buildNorthAndSouthFences(borders, groundMesh);
+        buildEastAndWestFences(borders, groundMesh);
     }
 
     void buildFarmyard()
