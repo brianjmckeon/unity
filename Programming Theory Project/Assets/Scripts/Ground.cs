@@ -2,31 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Base class for all ground types
+// Base class for all ground types.
 public abstract class Ground : MonoBehaviour
 {
-    // The food each type of ground produces, if any
+    // The food each type of ground produces.
     [SerializeField]
     protected GameObject foodPrefab;
 
-    // The food this tile currently has, if any
-    private GameObject food;
+    // The amount of food this tile has produced.
+    private int foodProduced = 0;
+
+    // Number of seconds until a new food is created.
+    protected abstract int productionRate { get; }
+
+    // The maximum amount of food that can be produced.
+    protected abstract int productionLimit { get; }
+
+    // Number of seconds to lay dormant after hitting the production limit.
+    protected abstract int dormantPeriod { get; }
 
 
-    // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(productionLoop());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator productionLoop()
     {
-        // Create some food
-        if (food == null)
+        while (true)
         {
-            if (Random.Range(0, 100) > 70)
+            if (foodProduced == productionLimit)
             {
-                food = produceFood();
+                // Going dormant
+                yield return new WaitForSeconds(dormantPeriod);
+                foodProduced = 0;
+            }
+            else
+            {
+                // Still producing
+                yield return new WaitForSeconds(productionRate);
+                var newFood = produceFood();
+                foodProduced++;
             }
         }
     }
@@ -35,7 +51,8 @@ public abstract class Ground : MonoBehaviour
     private GameObject produceFood()
     {
         GameObject newFood = Instantiate(foodPrefab);
-        newFood.transform.position = gameObject.transform.position;
+        var offset = new Vector3(Random.Range(2, 4), Random.Range(0.5f, 1), Random.Range(2, 4));
+        newFood.transform.position = gameObject.transform.position + offset;
         return newFood;
     }
 }

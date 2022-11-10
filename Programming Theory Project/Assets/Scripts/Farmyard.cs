@@ -120,8 +120,8 @@ public class Farmyard : MonoBehaviour
         columns = (int)(groundMesh.bounds.extents.x / resourceMesh.bounds.extents.x);
 
         //Debug.Log($"Ground: z: {groundMesh.bounds.extents.z} x: {groundMesh.bounds.extents.x}");
-        Debug.Log($"Resource: z: {resourceMesh.bounds.extents.z} x: {resourceMesh.bounds.extents.x}");
-        Debug.Log($"Ground {groundMesh.bounds.min.z} {groundMesh.bounds.max.z}");
+        //Debug.Log($"Resource: z: {resourceMesh.bounds.extents.z} x: {resourceMesh.bounds.extents.x}");
+        //Debug.Log($"Ground {groundMesh.bounds.min.z} {groundMesh.bounds.max.z}");
 
         float startX = groundMesh.bounds.min.x + resourceMesh.bounds.extents.x;
         float startZ = groundMesh.bounds.min.z + resourceMesh.bounds.extents.z;
@@ -149,7 +149,7 @@ public class Farmyard : MonoBehaviour
             resources.Add(rowList);
         }
 
-        debugResourcesArray();
+        //debugResourcesArray();
     }
 
     private void debugResourcesArray()
